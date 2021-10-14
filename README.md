@@ -1,6 +1,6 @@
-Circuit Break 3.0
+## Circuit Break 3.0
 
-Placa eletrônica para proteção de sobrecorrente.
+### Placa eletrônica para proteção de sobrecorrente.
 
 IDE: IAR Versão 8.20.1
 
@@ -12,7 +12,7 @@ Desenvolvimento de esquemático: Felipe Bandeira (felipeband18@gmail.com)
 
 Desenvolvimento de firmware:    Alef Carneiro (carneiroalef@gmail.com), Lucas Vitoriano (LucasVitoriano25@gmail.com)
 
-
+### USO
 SW1 - Habilita/Desabilita as chaves
 
 SW2 - Diminui o valor do IBreak

@@ -1,16 +1,16 @@
-"C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Src\main.c"
+"C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\Src\main.c"
 -std=c11
 -ferror-limit=0
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\EWARM/../Inc
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\EWARM/../Inc
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\EWARM\..\Drivers\STM32F0xx_HAL_Driver\Inc
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\EWARM\..\Drivers\STM32F0xx_HAL_Driver\Inc
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\EWARM/../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\EWARM/../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\EWARM/../Drivers/CMSIS/Device/ST/STM32F0xx/Include
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\EWARM/../Drivers/CMSIS/Device/ST/STM32F0xx/Include
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\EWARM/../Drivers/CMSIS/Include
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\EWARM/../Drivers/CMSIS/Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\CMSIS\Include
 -I
@@ -18,15 +18,15 @@ C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc\c
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Inc
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\Inc
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Drivers\STM32F0xx_HAL_Driver\Inc
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\Drivers\STM32F0xx_HAL_Driver\Inc
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Drivers\STM32F0xx_HAL_Driver\Inc\Legacy
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\Drivers\STM32F0xx_HAL_Driver\Inc\Legacy
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Drivers\CMSIS\Device\ST\STM32F0xx\Include
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\Drivers\CMSIS\Device\ST\STM32F0xx\Include
 -I
-C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Drivers\CMSIS\Include
+C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\Drivers\CMSIS\Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\CMSIS\Include
 -D__CHAR_BITS__=8

@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\EWARM\settings\CircuitBreak V2.CircuitBreak_V2.general.xcl" --backend -f "C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\EWARM\settings\CircuitBreak V2.CircuitBreak_V2.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3 - capV1\EWARM\settings\CircuitBreak V2.CircuitBreak_V2.general.xcl" --backend -f "C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3 - capV1\EWARM\settings\CircuitBreak V2.CircuitBreak_V2.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\EWARM\settings\CircuitBreak V2.CircuitBreak_V2.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3\EWARM\settings\CircuitBreak V2.CircuitBreak_V2.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3 - capV1\EWARM\settings\CircuitBreak V2.CircuitBreak_V2.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\lucas vitoriano\Desktop\CircuitBreak_V3 - capV1\EWARM\settings\CircuitBreak V2.CircuitBreak_V2.driver.xcl" 
 }

@@ -44,19 +44,26 @@ extern float last_ibats_filtered[3];
 extern float last_vbats[3];
 extern float last_vbats_filtered[3];
 
-extern uint8_t uart_rx_data[2];
-
+extern uint16_t vbat_buff[OC_BUFF_SIZE];
 extern uint16_t oc_buff[OC_BUFF_SIZE];
-extern uint16_t oc_idx;
 extern uint16_t oc_buff_head;
-extern uint8_t  oc_go;
 
-uint16_t sample_idx = 0;
-uint32_t ibat_accum = 0;
-uint32_t ibat_final = 0;
+
+//Vari�veis para controle 
+extern uint8_t oc_idx;
+extern bool  oc_go;
+uint16_t ibat_cutter[3] = {0,0,0};
+uint16_t sample_idx = 1;
+uint16_t sample_idx_accum = 0;
+bool oc_go_last_state = false;
+bool waiting_second_read = false;
+
+float ibat_accum = 0;
+float ibat_final = 0;
 uint32_t vbat_accum = 0;
-uint32_t vbat_final = 0;
+float vbat_final = 0;
 
+bool Is_Capacitor = false;
 extern CircuitBreak cbs;
 extern uint32_t last_psh_tick;
 extern uint32_t beepBreakStart;
@@ -161,14 +168,15 @@ void EXTI4_15_IRQHandler(void) {
     HAL_Delay(10);
     if(HAL_GPIO_ReadPin(SW1_GPIO_Port, SW1_Pin) == GPIO_PIN_RESET) {
       MOSFET_TOGGLE();
-      oc_go = 1;
+      oc_go = !oc_go;
+      oc_idx = 1;
       cbs.state = NORMAL;
+      oc_go_last_state = false;
     }
     
     last_psh_tick = HAL_GetTick();
   }
   /* USER CODE END EXTI4_15_IRQn 0 */
-//  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
   /* USER CODE BEGIN EXTI4_15_IRQn 1 */
 
   /* USER CODE END EXTI4_15_IRQn 1 */
@@ -178,63 +186,86 @@ void EXTI4_15_IRQHandler(void) {
 * @brief This function handles DMA1 channel 1 interrupt.
 */
 void DMA1_Channel1_IRQHandler(void) {
+       
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+
   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
   // Clear the transfer complete flag
   hdma_adc.DmaBaseAddress->IFCR = DMA_FLAG_TC1 << hdma_adc.ChannelIndex;
   
-  
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
-  
-  // Check if break condition and turn the MOSFET off
-  if (cbs.ibat > (cbs.ibreak+2)) {
-    //MOSFET_OFF();
-    
-    // Turn BUZZER on
-    if (cbs.state != BREAK && cbs.buzzer == SOUND) {
-      HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
-      beepBreakStart = HAL_GetTick();
+  //Come�a a comparar somente se o mosfet tiver ligado
+  if(oc_go){
+
+    if(oc_idx != 1){
+      
+      if(oc_idx == 2){    
+        if (5*ibat_cutter[1] < 3.5 *ibat_cutter[0]){
+            Is_Capacitor = true;
+        }else
+            Is_Capacitor = false;
+      } 
+
+      //Se for um capacitor s� desligar se a corrente for maior que 300A
+      if( Is_Capacitor && (cbs.ibat > (300 / ganhoINA ))){
+           MOSFET_OFF();              
+          // Turn BUZZER on
+          if (cbs.state != BREAK && cbs.buzzer == SOUND) {
+            HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+            beepBreakStart = HAL_GetTick();
+          }             
+          cbs.state = BREAK;      
+      // Se n�o for capacitor faz a compara��o normal
+      }else if( !Is_Capacitor && ((cbs.ibat) > (cbs.ibreak + 2))){
+          MOSFET_OFF();              
+          // Turn BUZZER on
+          if (cbs.state != BREAK && cbs.buzzer == SOUND) {
+            HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+            beepBreakStart = HAL_GetTick();
+          }              
+          cbs.state = BREAK;     
+      }
+
+     // >10 para evitar ruido  
+      if(cbs.ibat > 10){ 
+        ibat_cutter[oc_idx] = cbs.ibat;
+      }
     }
-    
-    cbs.state = BREAK;
-    //oc_go = 0;
-   
+    if(oc_idx ==1){
+      oc_idx = 2;
+    }
+    else if(oc_idx == 2){
+      oc_idx = 3;
+    }
   }
-  
-  /* USER CODE END DMA1_Channel1_IRQn 0 */
-    
-  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
-  ibat_accum += cbs.ibat;
-  vbat_accum += cbs.vbat;
-  sample_idx++;
-  if (sample_idx == 1999) {
+   
+ HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+
+}
+
+void TIM16_IRQHandler(void)
+{  
+  //A cada 1s reseta a somatória. Diminuindo o delay 
+  if(sample_idx == 100){
     sample_idx = 0;
-    ibat_final = ibat_accum;
-    vbat_final = vbat_accum;
     ibat_accum = 0;
     vbat_accum = 0;
   }
   
-  // Fill over current buffer
-  if (oc_go && oc_idx != OC_BUFF_SIZE) {
-    
-    oc_buff[oc_idx] = cbs.ibat;
-    oc_idx++;
-    
-} 
+  ibat_accum += cbs.ibat;
+  vbat_accum += cbs.vbat;
+  sample_idx++;
   
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-  /* USER CODE END DMA1_Channel1_IRQn 1 */
-}
-
-void TIM16_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM16_IRQn 0 */
+  ibat_final = 5*ibat_accum;
+  vbat_final = vbat_accum;
+  
+  
+ /* USER CODE BEGIN TIM16_IRQn 0 */
   __HAL_TIM_CLEAR_IT(&htim16, TIM_IT_UPDATE);
   
   // Update last_ibats
   last_ibats[2] = last_ibats[1];
   last_ibats[1] = last_ibats[0];
-  last_ibats[0] = (ibat_final * ganhoINA) / 1999;
+  last_ibats[0] = (ibat_final * ganhoINA) / sample_idx;
 
   // Update previous last_ibats_filtered
   last_ibats_filtered[2] = last_ibats_filtered[1];
@@ -249,7 +280,7 @@ void TIM16_IRQHandler(void)
   // Update last_vbats
   last_vbats[2] = last_vbats[1];
   last_vbats[1] = last_vbats[0];
-  last_vbats[0] = (vbat_final/1999)*3.3*11/4095;
+  last_vbats[0] = (vbat_final/sample_idx)*3.3*11/4095;
 
   // Update previous last_ibats_filtered
   last_vbats_filtered[2] = last_vbats_filtered[1];
@@ -263,12 +294,11 @@ void TIM16_IRQHandler(void)
   
   
   /* USER CODE END TIM16_IRQn 0 */
-  
-//  HAL_TIM_IRQHandler(&htim16);
-  
+    
   /* USER CODE BEGIN TIM16_IRQn 1 */
 
   /* USER CODE END TIM16_IRQn 1 */
+
 }
 
 /**

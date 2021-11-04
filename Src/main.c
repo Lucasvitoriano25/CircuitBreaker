@@ -64,12 +64,11 @@ LCD_PortType ports[] = {LCD_D4_GPIO_Port, LCD_D5_GPIO_Port, LCD_D6_GPIO_Port, LC
 LCD_PinType  pins[]  = {LCD_D4_Pin,       LCD_D5_Pin,       LCD_D6_Pin,       LCD_D7_Pin};
 LCD_HandleTypeDef lcd;
 
-
+uint16_t vbat_buff[OC_BUFF_SIZE] = {0};
 uint16_t oc_buff[OC_BUFF_SIZE] = {0};
-uint16_t oc_idx       = 0;
+uint8_t oc_idx       = 0;
 uint16_t oc_buff_head = 0;
 uint8_t  oc_go        = 0;
-
 uint32_t page_write_error;
 
 float    last_ibats[3] = {0, 0, 0};
@@ -230,7 +229,7 @@ int main(void)
         LCD_float(&lcd, 0, 2);
         LCD_cursor(&lcd, 2, 8 + cbs.digit);
         att_LCD.Debug_State = false;
-      }else if(((LED_GPIO_Port->ODR && LED_Pin)) && ((int)(att_LCD.Ibat*100)) != ((int)(cbs.ibat_float*100))){
+      }else if( ((int)(att_LCD.Ibat*100)) != ((int)(cbs.ibat_float*100))){
         LCD_cursor(&lcd, 1, 8);
         LCD_float(&lcd, cbs.ibat_float, 2);
         att_LCD.Ibat = cbs.ibat_float;

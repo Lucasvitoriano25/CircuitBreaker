@@ -14,13 +14,13 @@
     <StLinkDriver>
         <stlinkserialNo>56330187</stlinkserialNo>
         <stlinkfoundProbes />
-        <stlinkResetStyle>0</stlinkResetStyle>
+        <stlinkResetStyle>1</stlinkResetStyle>
         <stlinkResetStrategy>3</stlinkResetStrategy>
         <CStepIntDis>_ 0</CStepIntDis>
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>4155725804</Checksum>
+        <Checksum>2859830132</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -41,10 +41,13 @@
     <watch_formats>
         <Fmt0>{W}1:go	3	0</Fmt0>
         <Fmt1>{W}42:JaPressionado	3	0</Fmt1>
-        <Fmt2>{W}42:exti_cnt	3	0</Fmt2>
-        <Fmt3>{W}42:flash_test	4	0</Fmt3>
-        <Fmt4>{W}42:go	3	0</Fmt4>
-        <Fmt5>{W}42:last_lcd_update	4	0</Fmt5>
+        <Fmt2>{W}42:cbs.ibat	3	0</Fmt2>
+        <Fmt3>{W}42:exti_cnt	3	0</Fmt3>
+        <Fmt4>{W}42:flash_test	4	0</Fmt4>
+        <Fmt5>{W}42:go	3	0</Fmt5>
+        <Fmt6>{W}42:last_lcd_update	4	0</Fmt6>
+        <Fmt7>{W}42:oc_go	3	0</Fmt7>
+        <Fmt8>{W}42:oc_idx	3	0</Fmt8>
     </watch_formats>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>
@@ -65,17 +68,21 @@
         <mode>0</mode>
     </DisassembleMode>
     <Breakpoints2>
-        <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32f0xx_it.c}.283.1" 0 0 1 "" 0 "" 0</Bp0>
-        <Bp1>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32f0xx_it.c}.283.1" 0 0 1 "" 0 "" 0</Bp1>
+        <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32f0xx_it.c}.310.1" 0 0 1 "" 0 "" 0</Bp0>
+        <Bp1>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32f0xx_it.c}.310.1" 0 0 1 "" 0 "" 0</Bp1>
         <Count>2</Count>
     </Breakpoints2>
     <Aliases>
         <A0>_ "C:\Users\LESC Schneider\Desktop\CircuitBreak V2\EWARM\startup_stm32f030x6.s" "C:\Users\Lesc\Desktop\Cube_WS\CircuitBreak V2\EWARM\startup_stm32f030x6.s"</A0>
         <A1>_ "C:\Users\Lesc\Desktop\Cube_WS\CircuitBreak V2\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_gpio.c" ""</A1>
         <A2>_ "C:\Users\Lesc\Desktop\Cube_WS\CircuitBreak V2\Src\main.c" ""</A2>
-        <A3>_ "C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Src\main.c" ""</A3>
-        <A4>_ "F:\Schneider\CircuitBreak_origin\EWARM\startup_stm32f030x6.s" ""</A4>
-        <Count>5</Count>
+        <A3>_ "C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal.c" ""</A3>
+        <A4>_ "C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_gpio.c" ""</A4>
+        <A5>_ "C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rcc.c" ""</A5>
+        <A6>_ "C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim.c" ""</A6>
+        <A7>_ "C:\Users\lucas vitoriano\Desktop\CircuitBreak_origin - Copia (2)\Src\main.c" ""</A7>
+        <A8>_ "F:\Schneider\CircuitBreak_origin\EWARM\startup_stm32f030x6.s" ""</A8>
+        <Count>9</Count>
         <SuppressDialog>1</SuppressDialog>
     </Aliases>
 </settings>
